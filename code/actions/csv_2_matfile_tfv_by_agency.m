@@ -4,15 +4,26 @@ addpath(genpath('../functions/'));
 
 load varkey.mat;
 
-outfilepath = 'D:/csiem/data-warehouse/mat/agency/';mkdir(outfilepath);
-filepath ='D:/csiem/data-warehouse/csv/';
-mergepath = 'D:/csiem/data-warehouse/mat/';
-filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+outfilepath = '../../../data-warehouse/mat/agency/';mkdir(outfilepath);
+%             'D:/csiem/data-warehouse/mat/agency/';mkdir(outfilepath);
+filepath = '../../../data-warehouse/csv';
+%          'D:/csiem/data-warehouse/csv/';
+mergepath = '../../../data-warehouse/mat/';
+%           'D:/csiem/data-warehouse/mat/';
+
+filelist = dir(fullfile(filepath, '**/*HEADER.csv'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 agency = [];
+            
+
 for i = 1:length(filelist)
-    data(i).header = import_header([filelist(i).folder,'\',filelist(i).name]);
+    display([filelist(i).folder,'/',filelist(i).name])
+    data(i).header = import_header([filelist(i).folder,'/',filelist(i).name]);
+    %data(i).header = import_header([filelist(i).folder,'\',filelist(i).name]);
+
     agency = [agency;{data(i).header.Agency_Code}];
 end
 
@@ -32,8 +43,9 @@ for ag = 7%1:length(unique_agency)
         disp(filelist(find_agency(ff)).name);
         
         
-        
-        headerfile = [filelist(find_agency(ff)).folder,'\',filelist(find_agency(ff)).name];
+        headerfile = [filelist(find_agency(ff)).folder,'/',filelist(find_agency(ff)).name];
+      %  headerfile = [filelist(find_agency(ff)).folder,'\',filelist(find_agency(ff)).name];
+
         datafile = regexprep(headerfile,'HEADER','DATA');
 
         % Import the header stuff
@@ -64,6 +76,7 @@ for ag = 7%1:length(unique_agency)
 
             % tab = readtable(datafile,opts);
 
+            display(datafile)
             tt = import_datafile_raw(datafile);
             disp('Finished Import');
             tab = struct2table(tt);
@@ -190,8 +203,11 @@ for ag = 7%1:length(unique_agency)
     clear csiem
 end
 
-filelist = dir(fullfile(outfilepath, '**\*.mat'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(outfilepath, '**/*.mat'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(outfilepath, '**\*.mat'));  %get list of files and folders in any subfolder
+
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
+
 
 
 for i = 1:length(filelist)

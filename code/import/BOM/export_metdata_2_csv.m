@@ -1,7 +1,8 @@
-function export_metdata_2_csv
+function export_metdata_2_csv(metdata)
 addpath(genpath('../../functions/'));
 
-load D:\csiem/data-warehouse/csv_holding/bom/idy/metdata.mat;
+%load '../../../../data-warehouse/csv_holding/bom/idy/metdata.mat'
+%D:\csiem/data-warehouse/csv_holding/bom/idy/metdata.mat;
 
 load ../../actions/varkey.mat;
 load ../../actions/agency.mat;
@@ -33,16 +34,18 @@ thevars = fieldnames(agency.bom);
 % [snum,sstr] = xlsread('V:/data-lake/site_key.xlsx','BOM','A2:H10000');
 % 
 
-outdir = 'D:/csiem/data-warehouse/csv/bom/idy/';
-
 writepath = 'data-warehouse/csv/bom/idy';
+outdir = ['../../../../', writepath,'/'];
+%'D:/csiem/data-warehouse/csv/bom/idy/';
+
+
 
 if ~exist(outdir,'dir')
     mkdir(outdir);
 end
 
 sites = fieldnames(metdata);
-
+failedVals = {};
 for i = 1:length(sites)
     foundsite = 0;
     for j = 1:length(thesites)
@@ -57,21 +60,31 @@ for i = 1:length(sites)
 %     ID = siteid(sss);
     
     
+    headers = metdata.(sites{i}).headers;
     vars = fieldnames(metdata.(sites{i}));
+    mtime = metdata.(sites{i}).Date;
+    % mtime = datenum(metdata.(sites{i}).Year,...
+    %     metdata.(sites{i}).Month,...
+    %     metdata.(sites{i}).Day,...
+    %     metdata.(sites{i}).Hour,...
+    %     metdata.(sites{i}).MI_Format,...
+    %     00);
     
-    mtime = datenum(metdata.(sites{i}).Year,...
-        metdata.(sites{i}).Month,...
-        metdata.(sites{i}).Day,...
-        metdata.(sites{i}).Hour,...
-        metdata.(sites{i}).MI_Format,...
-        00);
-    
-    for j = 1:length(vars)
-        
-        tvar = regexprep(vars{j},'_',' ');
+    format compact
+    for j = 1:length(headers)
+        display(headers{j})
+    end
+    fprintf('\n\n\n\n')
+    for j = 1:length(thevars)
+        disp(agency.bom.(thevars{j}).Old)
+    end
+
+    fprintf('\n\n')
+
+    for j = 1:length(headers)
         foundvar = [];
         for k = 1:length(thevars)
-            if strcmpi(agency.bom.(thevars{k}).Old,tvar) == 1
+            if strcmpi(agency.bom.(thevars{k}).Old,headers{j}) == 1
                 foundvar = k;
             end
         end
@@ -79,7 +92,6 @@ for i = 1:length(sites)
         if ~isempty(foundvar)
             
             disp('valid data');
-            
             dataint = find(~isnan(metdata.(sites{i}).(vars{j})) == 1);
             
             mdate = mtime(dataint);
@@ -158,8 +170,12 @@ for i = 1:length(sites)
                     fclose(fid);
                     %plot_datafile(filename);
                 end
+            else
+                fprintf('Empty valid data\n');
             end
-            
+        else
+            failedVal = ['site ' num2str(i) ,'; variable index ',num2str(j) , ' failed; header: ', headers{j} '; struct field name: ' vars{j}];
+            failedVals = [failedVals;failedVal];
         end
         
     end
@@ -167,6 +183,7 @@ for i = 1:length(sites)
     
     
 end
+failedVals
 
 
 

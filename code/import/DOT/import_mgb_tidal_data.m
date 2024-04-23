@@ -1,8 +1,10 @@
 function import_mgb_tidal_data
 
-main_dir = 'D:\csiem/data-lake/dot/tide/RKMGL01/';
+main_dir = '../../../../data-lake/DOT/tide/RKMGL01/';
+%'D:\csiem/data-lake/dot/tide/RKMGL01/';
 
-outdir = 'D:\csiem/data-warehouse/csv/dot/tide/';
+outdir = '../../../../data-warehouse/csv/dot/tide/';
+%'D:\csiem/data-warehouse/csv/dot/tide/';
 if ~exist(outdir,'dir')
     mkdir(outdir);
 end
@@ -89,7 +91,8 @@ theheader = 'Depth';
 
 depth = [];
 QC = 'n';
-filename = 'D:\csiem/data-warehouse/csv/dot/tide/RKMGL01_Tidal_Height_DATA.csv';
+filename = '../../../../data-warehouse/csv/dot/tide/RKMGL01_Tidal_Height_DATA.csv';
+%'D:\csiem/data-warehouse/csv/dot/tide/RKMGL01_Tidal_Height_DATA.csv';
 
 fid = fopen(filename,'wt');
 fprintf(fid,'Date,Depth,Data,QC\n');

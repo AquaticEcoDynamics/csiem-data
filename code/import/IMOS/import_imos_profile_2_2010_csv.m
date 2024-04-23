@@ -2,13 +2,15 @@ function import_imos_profile_2_2010_csv
 
 addpath(genpath('../../functions/'));
 
-thefile = 'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_WQM_and_CTD_burst_averaged_data_products.csv';
+thefile = '../../../../data-lake/IMOS/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_WQM_and_CTD_burst_averaged_data_products.csv';
+%            'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_WQM_and_CTD_burst_averaged_data_products.csv';
 
 load ../../actions/varkey.mat;
 load ../../actions/agency.mat;
 load ../../actions/sitekey.mat;
 
-outpath = 'D:/csiem/data-warehouse/csv_holding/imos/amnmprofile/';
+outpath = '../../../../data-warehouse/csv_holding/imos/amnmprofile/';
+%            'D:/csiem/data-warehouse/csv_holding/imos/amnmprofile/';
 
 if ~exist(outpath,'dir')
     mkdir(outpath);

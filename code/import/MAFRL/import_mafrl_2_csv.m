@@ -4,7 +4,8 @@ function import_mafrl_2_csv
 
 addpath(genpath('../../functions/'));
 
-thefile = 'D:/csiem/data-lake/csmc/mafrl/MAFRL - WQ data - 1982 to 2020_BBEdit.xlsx';
+thefile = '../../../../data-lake/CSMC/mafrl/MAFRL - WQ data - 1982 to 2020_BBEdit.xlsx';
+% /'D:/csiem/data-lake/csmc/mafrl/MAFRL - WQ data - 1982 to 2020_BBEdit.xlsx';
 
 theyears = [1983 1985 1986 1987 1990:1:1993 1997:1:2020];
 %theyears = [2013];
@@ -21,7 +22,8 @@ thevarval = fieldnames(varkey);
 theagencyval = fieldnames(agency.mafrl);
 
 
-outpath = 'D:/csiem/data-warehouse/csv_holding/csmc/csmcwq/';
+outpath = '../../../../data-warehouse/csv_holding/csmc/csmcwq/LachTest/';
+%'D:/csiem/data-warehouse/csv_holding/csmc/csmcwq/';
 %outpath = 'csmcwq-mafrl/';
 fiderr = fopen('errorfile.csv','wt');
 fprintf(fiderr,'Year,Site,Var,Foundsite,Foundvar\n');
@@ -29,9 +31,10 @@ fprintf(fiderr,'Year,Site,Var,Foundsite,Foundvar\n');
 if ~exist(outpath,'dir');mkdir(outpath);end
 
 for i = 1:length(theyears)
-    theyears(i)
     [~,sites] = xlsread(thefile,num2str(theyears(i)),'A3:A10000');
-    [~,sdate] = xlsread(thefile,num2str(theyears(i)),'B3:B10000');
+    TESTAdate = readtable(thefile,"Sheet",num2str(theyears(i)));
+    sdate = TESTAdate{:,2};
+    %[~,sdate] = xlsread(thefile,num2str(theyears(i)),'B3:B10000');
     [~,headers] = xlsread(thefile,num2str(theyears(i)),'C1:ZZ1');
     %[data,~] = xlsread(thefile,num2str(theyears(i)),'C3:ZZ10000');
     [sdata,~,sraw] = xlsread(thefile,num2str(theyears(i)),'C3:ZZ10000');
@@ -76,7 +79,8 @@ for i = 1:length(theyears)
                     thedate = [];
                     
                     thedata = data(sss,k) * agency.mafrl.(theagencyval{foundagency}).Conv;
-                    thedate = datenum(sdate(sss),'dd/mm/yyyy');
+                    thedate = datenum(sdate(sss));
+                    %thedate = datenum(sdate(sss),'dd/mm/yyyy');
                     
                     ggg = find(thedate < datenum(1832,01,01));
                     if ~isempty(ggg)
@@ -143,7 +147,13 @@ for i = 1:length(theyears)
                     fid = fopen(filename,'wt');
                     fprintf(fid,'Date,%s,Data,QC\n',type);
                     for nn = 1:length(thedata)
-                        fprintf(fid,'%s,%s,%4.4f,%s\n',datestr(thedate(nn),'yyyy-mm-dd HH:MM:SS'),thedepth{nn},thedata(nn),QC{nn});
+                        if(~isnan(thedate(nn))) %% ie if it is not nan do this else ignoroe date
+                            fprintf(fid,'%s,%s,%4.4f,%s\n',datestr(thedate(nn),'yyyy-mm-dd HH:MM:SS'),thedepth{nn},thedata(nn),QC{nn});
+                        else
+                            %fprintf(fid,'%s,%s,%4.4f,%s\n',datestr(thedate(nn),'yyyy-mm-dd HH:MM:SS'),thedepth{nn},thedata(nn),QC{nn});
+                            fprintf(fid,'%s,%s,%4.4f,%s\n','yyyy-mm-dd HH:MM:SS',thedepth{nn},thedata(nn),QC{nn});
+                        end
+
                     end
                     fclose(fid);
                     

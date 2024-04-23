@@ -6,9 +6,11 @@ addpath(genpath('../../functions/'));
 load ../../../code/actions/sitekey.mat;
 load ../../../code/actions/varkey.mat;
 
-outdir = 'D:\csiem\data-warehouse\csv\wcwa\wcwa-psdp-bmt349\';mkdir(outdir);
+outdir = '/Projects2/csiem-data-hub/data-warehouse/csv/wcwa/wcwa-psdp-bmt349/';mkdir(outdir);
+%                         'D:\csiem\data-warehouse\csv\wcwa\wcwa-psdp-bmt349\';mkdir(outdir);
 
-datafile = 'D:\csiem\data-lake\WCWA\Working\Working\2018\BMT 349 Cockburn Sound Metocean Summary Report\Water Quality\1334_09_PhysicalWQ.xlsx';
+datafile = '../../../../data-lake/WCWA/Working/Working/2018/BMT 349 Cockburn Sound Metocean Summary Report/Water Quality/1334_09_PhysicalWQ.xlsx';
+%'             D:\csiem\data-lake\WCWA\Working\Working\2018\BMT 349 Cockburn Sound Metocean Summary Report\Water Quality\1334_09_PhysicalWQ.xlsx';
 
 
 siteA = sitekey.wc.wc_metocean_A;

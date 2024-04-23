@@ -2,13 +2,15 @@ function import_imos_bgc_2_csv
 
 addpath(genpath('../../functions/'));
 
-thefile = 'D:/csiem/data-lake/imos/bgc/IMOS_-_Combined_Biogeochemical_parameters_(reference_stations)-All_biogeochemical_parameters.csv';
+thefile = '../../../../data-lake/IMOS/bgc/IMOS_-_Combined_Biogeochemical_parameters_(reference_stations)-All_biogeochemical_parameters.csv';
+%'D:/csiem/data-lake/imos/bgc/IMOS_-_Combined_Biogeochemical_parameters_(reference_stations)-All_biogeochemical_parameters.csv';
 
 load ../../actions/varkey.mat;
 load ../../actions/agency.mat;
 load ../../actions/sitekey.mat;
 
-outpath = 'D:/csiem/data-warehouse/csv/imos/bgc/';
+outpath = '../../../../data-warehouse/csv/imos/bgc/';
+%'D:/csiem/data-warehouse/csv/imos/bgc/';
 
 if ~exist(outpath,'dir')
     mkdir(outpath);
@@ -18,22 +20,26 @@ end
 thesiteval = fieldnames(sitekey.imosbgc);
 thevarval = fieldnames(varkey);
 theagencyval = fieldnames(agency.imosbgc);
+Test = readtable(thefile);
+% Test.Properties.VariableNames'
+%[~,headers] = xlsread(thefile,'A1:CE1');
+headers = Test.Properties.VariableNames;
 
-[~,headers] = xlsread(thefile,'A1:CE1');
+%[snum,sstr] = xlsread(thefile,'A2:CE1000');
 
-[snum,sstr] = xlsread(thefile,'A2:CE1000');
+%stations = sstr(:,3);
+stations = Test{:,3};
 
-stations = sstr(:,3);
-mdates = datenum(sstr(:,5),'dd/mm/yyyy');
+%mdates = datenum(sstr(:,5),'dd/mm/yyyy');
+mdates = datenum(Test{:,5});
 
-
-Depths = snum(:,6);
+%Depths = snum(:,6);
+Depths = Test{:,12}; %9 or 12
 Depths(isnan(Depths)) = 0;
-
-
 ustations = unique(stations);
 
-for i = 9:length(headers)
+for i = 9:width(Test)
+%for i = 9:length(headers)
     for j = 1:length(ustations)
         foundstation = 0 ;
         for k = 1:length(thesiteval)
@@ -57,9 +63,6 @@ for i = 9:length(headers)
         
         if foundvar > 0
             
-            
-            
-            
             thefoundvar = 0;
             for nn = 1:length(thevarval)
                 if strcmpi(thevarval{nn},agency.imosbgc.(theagencyval{foundvar}).ID) == 1
@@ -72,7 +75,8 @@ for i = 9:length(headers)
             
             sss = find(strcmpi(stations,ustations{j}) == 1);
             
-            thedata_raw = snum(sss,i-6) * agency.imosbgc.(theagencyval{foundvar}).Conv;
+            thedata_raw = Test.(headers{i})(sss) * agency.imosbgc.(theagencyval{foundvar}).Conv;
+            %thedata_raw = snum(sss,i-6) * agency.imosbgc.(theagencyval{foundvar}).Conv;
             ttt = find(~isnan(thedata_raw) == 1);
             thedata = thedata_raw(ttt);
             
@@ -89,7 +93,7 @@ for i = 9:length(headers)
             
             filevar = regexprep(varkey.(thevarval{thefoundvar}).Name,' ','_');
             filevar = regexprep(filevar,'+','_');
-            filename = [outpath,sitekey.imosbgc.(thesiteval{foundstation}).AED,'_',filevar,'_DATA.csv'];
+            filename = [outpath,sitekey.imosbgc.(thesiteval{foundstation}).AED,'_',filevar,'_DATA.csv']
             fid = fopen(filename,'wt');
             fprintf(fid,'Date,Depth,Data,QC\n');
             for nn = 1:length(thedata)

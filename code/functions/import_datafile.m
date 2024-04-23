@@ -1,9 +1,13 @@
 function data = import_datafile(filename)
 
-[~,headers] = xlsread(filename,'A1:D1');
+%[~,headers] = xlsread(filename,'A1:D1');
 
 
 fid = fopen(filename,'rt');
+fline = fgetl(fid);
+headers = split(fline,',');
+
+frewind(fid);
 
 
 x  = 4;
@@ -14,7 +18,7 @@ datacell = textscan(fid,textformat,'Headerlines',1,'Delimiter',',');
 fclose(fid);
 
 data.Date = datenum(datacell{1},'yyyy-mm-dd HH:MM:SS');
-data.Data = str2doubleq(datacell{3});
+data.Data = str2double(datacell{3});
 data.QC = datacell{4};
 if strcmpi(headers{2},'Depth')
     data.Depth = datacell{2};

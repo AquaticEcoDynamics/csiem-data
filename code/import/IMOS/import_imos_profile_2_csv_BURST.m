@@ -19,13 +19,17 @@ thesiteval = fieldnames(sitekey.imosbgc);
 thevarval = fieldnames(varkey);
 theagencyval = fieldnames(agency.imosprofile);
 
-[~,headers] = xlsread(thefile,'A29:CA29');
+Table = readtable(thefile);
+headers = Table.Properties.VariableNames;
+%[~,headers] = xlsread(thefile,'A29:CA29');
 
-[snum,sstr] = xlsread(thefile,'A30:CA689555');
+%[snum,sstr] = xlsread(thefile,'A30:CA689555');
 
-stations = sstr(:,4);
+%stations = sstr(:,4);
+stations = Table{:,4};
 
-sdate = sstr(:,8);
+sdate = Table{:,8};
+%sdate = sstr(:,8);
 sdate = regexprep(sdate,'T',' ');
 sdate = regexprep(sdate,'Z','');
 

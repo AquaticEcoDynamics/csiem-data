@@ -10,9 +10,11 @@ load ../../../code/actions/agency.mat;
 sgsites = fieldnames(sitekey.wwmsp2_seagrass);
 
 
-filename = 'D:\csiem\data-lake\WAMSI\wwmsp2.2_seagrass\Driver of Seagrass Condition_Regional for Hipsey_4lake.csv';
+filename = '../../../../data-lake/WAMSI/wwmsp2.2_seagrass/Driver of Seagrass Condition_Regional for Hipsey_4lake.csv';
+             %'D:\csiem\data-lake\WAMSI\wwmsp2.2_seagrass\Driver of Seagrass Condition_Regional for Hipsey_4lake.csv';
 
-outdir = 'D:\csiem\data-warehouse\csv\wamsi\wwmsp2.2_seagrass\';mkdir(outdir);
+outdir = '../../../../data-warehouse/csv/wamsi/wwmsp2.2_seagrass/';mkdir(outdir);
+           %'D:\csiem\data-warehouse\csv\wamsi\wwmsp2.2_seagrass\';mkdir(outdir);
 
 
 data = readtable(filename);

@@ -8,9 +8,11 @@ load ../../../code/actions/varkey.mat;
 load ../../../code/actions/agency.mat;
 
 
-filename = 'D:\csiem\data-lake\WAMSI\wwmsp2.2_light\Light Data\Light data Mastersheet_July2023-2.xlsx';
+filename = '../../../../data-lake/WAMSI/wwmsp2.2_light/Light Data/Light data Mastersheet_July2023-2.xlsx';
+             %'D:\csiem\data-lake\WAMSI\wwmsp2.2_light\Light Data\Light data Mastersheet_July2023-2.xlsx';
 
-outdir = 'D:\csiem\data-warehouse\csv\wamsi\wwmsp2.2_light\';mkdir(outdir);
+outdir = '../../../../data-warehouse/csv/wamsi/wwmsp2.2_light/';mkdir(outdir);
+%'D:\csiem\data-warehouse\csv\wamsi\wwmsp2.2_light\';
 
 
 data = readtable(filename,'sheet','all data');
@@ -66,8 +68,14 @@ for i = 1:length(headers)
             wdate = mdate(sss,1);
             wdepth = mdepth(sss,1);
             
+
+            fvarname = regexprep(varname,'µ','u');
+            fvarname = regexprep(fvarname,'/','\');    
+
+            fvarname
             
-            filename = [outdir,sitekey.wwmsp2.(thesites{sitenum}).AED,'_',regexprep(varname,' ','_'),'_DATA.csv'];
+            
+            filename = [outdir,sitekey.wwmsp2.(thesites{sitenum}).AED,'_',regexprep(fvarname,' ','_'),'_DATA.csv'];
             
             
             fid = fopen(filename,'wt');

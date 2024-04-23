@@ -2,15 +2,18 @@ function import_netcdf_csv_ADCP
 
 addpath(genpath('../../functions/'));
 
-filepath = 'D:csiem/data-lake/wamsi/wwmsp5_adcp/';
+filepath = '../../../../data-lake/WAMSI/wwmsp5_adcp/';
+              %'D:csiem/data-lake/wamsi/wwmsp5_adcp/';
 
-outdir = 'D:csiem/data-warehouse/csv/wamsi/wwmsp5_awac/';
+outdir = '../../../../data-warehouse/csv/wamsi/wwmsp5_awac/';
+            %'D:csiem/data-warehouse/csv/wamsi/wwmsp5_awac/';
 
 mkdir(outdir);
 
 plotdir = 'Images/';mkdir(plotdir);
 
-filelist = dir(fullfile(filepath, '**\*.nc'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*.nc'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(filepath, '**/*.nc'));  %get list of files and folders in any subfolder
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 % Conversion

@@ -1,8 +1,11 @@
 function import_bar_tidal_data
 
-main_dir = 'D:\csiem\data-lake\DOT\tide/PTBAR02/';
+main_dir = '../../../../data-lake/DOT/tide/PTBAR02/';
+%'D:\csiem\data-lake\DOT\tide/PTBAR02/';
 
-outdir = 'D:\csiem/data-warehouse/csv/dot/tide/';
+outdir = '../../../../data-warehouse/csv/dot/tide/';
+%'D:\csiem/data-warehouse/csv/dot/tide/';
+
 if ~exist(outdir,'dir')
     mkdir(outdir);
 end
@@ -93,7 +96,8 @@ theheader = 'Depth';
 
 depth = [];
 QC = 'n';
-filename = 'D:\csiem/data-warehouse/csv/dot/tide/PTBAR02_Tidal_Height_DATA.csv';
+filename = '../../../../data-warehouse/csv/dot/tide/PTBAR02_Tidal_Height_DATA.csv';
+                           %'D:\csiem/data-warehouse/csv/dot/tide/PTBAR02_Tidal_Height_DATA.csv';
 
 fid = fopen(filename,'wt');
 fprintf(fid,'Date,Height,Data,QC\n');

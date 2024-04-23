@@ -1,2 +1,0 @@
-D:\csiem\data-lake\wamsi\wwmsp5_adcp\ADCP/20211221_CS7_EcoADCP_0223_EPSG7844.nc
-D:\csiem\data-lake\wamsi\wwmsp5_adcp\ADCP/20220311_CS7_EcoADCP_0223_EPSG7844.nc

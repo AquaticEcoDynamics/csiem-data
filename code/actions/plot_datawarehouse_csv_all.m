@@ -1,18 +1,29 @@
 function plot_datawarehouse_csv_all(plotnew_dataplots)%   clear all; close all;
 
-filepath ='D:\csiem\data-warehouse\csv\';
+filepath = '../../../data-warehouse/csv/';
+%          'D:\csiem\data-warehouse\csv\';
 
-outdir = 'D:\csiem\data-warehouse\data-images\';
-filelist = dir(fullfile(filepath, '**\*DATA.csv'));  %get list of files and folders in any subfolder
+outdir = '../../../data-warehouse/data-images/';
+%        'D:\csiem\data-warehouse\data-images\';
+
+filelist = dir(fullfile(filepath, '**/*DATA.csv'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*DATA.csv'));  %get list of files and folders in any subfolder
+
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 for i = 1:length(filelist)
     
-    filename = [filelist(i).folder,'\',filelist(i).name];
+    filename = [filelist(i).folder,'/',filelist(i).name];
+%    filename = [filelist(i).folder,'\',filelist(i).name];
+
     
-    spt = split(filelist(i).folder,'\');
+    spt = split(filelist(i).folder,'/');
+%    spt = split(filelist(i).folder,'\');
+
     
-    savedir = [outdir,spt{end-1},'\',spt{end},'\'];
+    savedir = [outdir,spt{end-1},'/',spt{end},'/'];
+%    savedir = [outdir,spt{end-1},'\',spt{end},'\'];
+
     
     mkdir(savedir);
     

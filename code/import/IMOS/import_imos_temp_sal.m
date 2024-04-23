@@ -1,13 +1,15 @@
 function import_imos_temp_sal
 %clear all; close all;
 
-thefile = 'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_Temperature_and_salinity_time-series.csv';
+thefile = '../../../../data-lake/IMOS/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_Temperature_and_salinity_time-series.csv';
+%            'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_Facility_-_Temperature_and_salinity_time-series.csv';
 
 load ../../actions/varkey.mat;
 load ../../actions/agency.mat;
 load ../../actions/sitekey.mat;
 
-outpath = 'D:/csiem/data-warehouse/csv/imos/amnmadcp/';
+outpath = '../../../../data-warehouse/csv/imos/amnmadcp/';
+%'D:/csiem/data-warehouse/csv/imos/amnmadcp/';
 
 if ~exist(outpath,'dir')
     mkdir(outpath);

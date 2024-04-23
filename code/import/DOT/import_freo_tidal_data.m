@@ -1,7 +1,13 @@
 function import_freo_tidal_data
+    % /Projects2/csiem-data-hub/git/code/import/DOT
 
-main_dir = 'D:\csiem/data-lake/dot/tide/FFFBH01/';
-outdir = 'D:\csiem/data-warehouse/csv/dot/tide/';
+main_dir = '../../../../data-lake/DOT/tide/FFFBH01/'
+%'/Projects2/csiem-data-hub/data-lake/DOT/tide/FFFBH01/';
+%'D:\csiem/data-lake/dot/tide/FFFBH01/';
+outdir = '../../../../data-warehouse/csv/dot/tide/';
+%'/Projects2/csiem-data-hub/data-warehouse/csv/dot/tide/';
+%'D:\csiem/data-warehouse/csv/dot/tide/';
+
 if ~exist(outdir,'dir')
     mkdir(outdir);
 end
@@ -89,7 +95,9 @@ theheader = 'Depth';
 
 depth = [];
 QC = 'n';
-filename = 'D:\csiem/data-warehouse/csv/dot/tide/FFFBH01_Tidal_Height_DATA.csv';
+filename =     '../../../../data-warehouse/csv/dot/tide/FFFBH01_Tidal_Height_DATA.csv';
+%'/Projects2/csiem-data-hub/data-warehouse/csv/dot/tide/FFFBH01_Tidal_Height_DATA.csv';
+%'D:\csiem/data-warehouse/csv/dot/tide/FFFBH01_Tidal_Height_DATA.csv';
 
 fid = fopen(filename,'wt');
 fprintf(fid,'Date,Depth,Data,QC\n');

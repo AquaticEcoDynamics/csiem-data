@@ -53,7 +53,7 @@ function AllTable = Extractor(directory,searchReq)
 
     %Adding Lat and Long
     LatLong = table('Size',[NumOfFiles,2],'VariableTypes',["double","double"],'VariableNames',["Latitude","Longitude"]);
-    Dict = ReadInCoordDictionary("WWMSP3.1 - Sediment Quality\Study areas and site locations\3.1_coordinates_edited.csv", [2, Inf]);
+    Dict = ReadInCoordDictionary("../../../../../data-swamp/WWMSP3.1 - Sediment Quality CutDown/Study areas and site locations/3.1_coordinates_edited.csv", [2, Inf]);
     for i = 1:NumOfFiles
         Logical = table2array(AllTable(i,'Sample Name:')) == Dict.Title;
         if sum(Logical) > 0 

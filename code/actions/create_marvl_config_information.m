@@ -4,9 +4,9 @@ load varkey.mat;
 
 allvars = fieldnames(varkey);
 
-matdir = 'D:/csiem/data-warehouse/mat/agency/';
+matdir = '/GIS_DATA/csiem-data-hub/data-warehouse/mat/agency/';
 
-filelist = dir(fullfile(matdir, '**\*.mat'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(matdir, '**/*.mat'));  %get list of files and folders in any subfolder
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 fid = fopen('marvl_information.m','wt');

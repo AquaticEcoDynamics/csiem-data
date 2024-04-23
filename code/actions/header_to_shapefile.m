@@ -5,13 +5,16 @@ addpath(genpath('../functions'));
 
 load varkey.mat;
 
-filepath ='D:/csiem/data-warehouse/csv/';
-filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+filepath = '../../../data-warehouse/csv/';
+%          'D:/csiem/data-warehouse/csv/';
+filelist = dir(fullfile(filepath, '**/*HEADER.csv'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 for i = 1:length(filelist)
     
-    headerfile = [filelist(i).folder,'/',filelist(i).name];
+    headerfile = [filelist(i).folder,'/',filelist(i).name]
     
     header = import_header(headerfile);
     smd = import_header_smd(regexprep(headerfile,'HEADER','SMD'));

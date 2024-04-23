@@ -27,8 +27,8 @@ fid = fopen(headerfile,'wt');
             %%
             fprintf(fid,'Site Description,%s\n',Desc);
             fprintf(fid,'Deployment,%s\n','Fixed');
-            fprintf(fid,'Deployment Position,%s\n','');% '0.0m above Seabed');
-            fprintf(fid,'Vertical Reference,%s\n','');%  'm above Seabed');
+            fprintf(fid,'Deployment Position,%s\n','0.0m above Seabed');
+            fprintf(fid,'Vertical Reference,%s\n','m above Seabed');
             fprintf(fid,'Site Mean Depth,%4.4f\n',sitedepth);
             %%
 

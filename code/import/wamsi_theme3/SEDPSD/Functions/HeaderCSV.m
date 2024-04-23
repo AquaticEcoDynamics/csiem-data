@@ -7,6 +7,9 @@ function HeaderCSV(InputFlatFile,VarKey)
     [UniqueVars,VarIndex,~] = unique(table2array(Table(:,"Var6")));
     [UniqueSites,SiteIndex,~] = unique(table2array(Table(:,"Var4")));
 
+    OutDir = '../../../../../data-warehouse/csv/wamsi/wwmsp3.1_SEDPSD/';
+    mkdir(OutDir);
+
     %% Create Header and CSV
     for VarNum = 1:length(UniqueVars)
         VarKeyInd = VarKey{:,2} == UniqueVars(VarNum);
@@ -15,7 +18,7 @@ function HeaderCSV(InputFlatFile,VarKey)
             %  mafrl_CB_Ammonium_Int_Data.csv
             %  mafrl_CB_Ammonium_Int_Header.csv
 
-            fileName = ['SeperateCSV\',char(UniqueSites(SiteNum)) ,'_',char(UniqueVars(VarNum))];
+            fileName = [OutDir,char(UniqueSites(SiteNum)),'_',char(UniqueVars(VarNum))];
                 fileName = filenameGoodifier(fileName);
 
             
@@ -43,12 +46,17 @@ function HeaderCSV(InputFlatFile,VarKey)
         SiteName = table2array(Table(DataNum,"Var4"));
         VarName = table2array(Table(DataNum,"Var6"));
 
-        fileName = ['SeperateCSV\',char(SiteName) ,'_',char(VarName),'.csv'];
+        fileName = [OutDir,char(SiteName) ,'_',char(VarName)];
                 fileName = filenameGoodifier(fileName);
 
-        fid = fopen(fileName,'a');
+
+            
+        fid = fopen([fileName,'_DATA.csv'],'a');
+
+    
         
-        Date = datestr(table2array(Table(DataNum,'Var1')),'yyyy-mm-dd');
+        %Date = datestr(table2array(Table(DataNum,'Var1')),'yyyy-mm-dd');
+        Date = datestr(table2array(Table(DataNum,'Var1')),'yyyy-mm-dd HH:MM:SS');
         Depth = 0;
         Data = table2array(Table(DataNum,'Var8')); %HardCoded to 8
         QC = 'N';

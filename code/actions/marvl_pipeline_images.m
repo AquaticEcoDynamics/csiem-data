@@ -90,7 +90,7 @@ master.ncfile(1).tag = 'TFV';
 
 % field data
 master.add_fielddata = 1;
-master.fielddata_folder = 'D:\csiem\data-warehouse\mat\agency\';
+master.fielddata_folder = '/GIS_DATA/csiem-data-hub/data-warehouse/mat/agency/';
 
 % Build this dynamically...
 %master.fielddata_files = {'csiem_IMOS_public','csiem_DWER_public','csiem_DPIRD_public','csiem_CSMC_public','csiem_WCWA_public','csiem_WAMSI_public','csiem_DOT_public','csiem_FPA_public'};
@@ -138,7 +138,7 @@ timeseries.isFieldRange = 0;
 timeseries.fieldprctile = [10 90];
 timeseries.isHTML = 1;
 
-timeseries.polygon_file = 'D:\csiem\marvl\gis/MLAU_Zones_v3_ll.shp';
+timeseries.polygon_file = '/GIS_DATA/csiem-data-hub/marvl/gis/MLAU_Zones_v3_ll.shp';
 timeseries.plotAllsites = 1;
 if timeseries.plotAllsites == 0
     timeseries.plotsite = [6 10 29];
@@ -162,9 +162,9 @@ timeseries.skills = [1,... % r: regression coefficient (0-1)
     1,... % NRMS: RMSE normalized to mean observation
     1,... % MEF: model efficienty, Nash-Sutcliffe Efficiency
     ];
-timeseries.outputdirectory = 'D:\csiem\data-warehouse\marvl-images/raw/';
-timeseries.htmloutput = 'D:\Cloud\AED Dropbox\AED_Cockburn_db\CSIEM\Data\data-warehouse\marvl-images/html/';
-timeseries.ErrFilename = 'D:\csiem\marvl/outputs/timeseries_test_joint2/errormatrix.mat';
+timeseries.outputdirectory = '/GIS_DATA/csiem-data-hub/marvl-images/raw/';
+timeseries.htmloutput = '/GIS_DATA/csiem-data-hub/data-warehouse/marvl-images/html/';
+timeseries.ErrFilename = '/GIS_DATA/csiem-data-hub/data-warehouse/marvl-images/errormatrix.mat';
 
 timeseries.ncfile(1).symbol = {'-';'-'};
 timeseries.ncfile(1).colour = {[166,86,40]./255;[8,88,158]./255};% Surface and Bottom

@@ -2,13 +2,16 @@ function import_imos_profile_2_csv;
 
 addpath(genpath('../../functions/'));
 
-thefile = 'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_-_CTD_Profiles_2019_2022.csv';
+thefile = '../../../../data-lake/IMOS/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_-_CTD_Profiles_2019_2022.csv';
+                                                 %'IMOS_-_Australian_National_Mooring_Network_(ANMN)_-_CTD_Profiles_2019_2022.csv'
+%'D:/csiem/data-lake/imos/amnmprofile/IMOS_-_Australian_National_Mooring_Network_(ANMN)_-_CTD_Profiles_2019_2022.csv';
 
 load ../../actions/varkey.mat;
 load ../../actions/agency.mat;
 load ../../actions/sitekey.mat;
 
-outpath = 'D:/csiem/data-warehouse/csv_holding/imos/amnmprofile/';
+outpath =  '../../../../data-warehouse/csv_holding/imos/amnmprofile/';
+%'              D:/csiem/data-warehouse/csv_holding/imos/amnmprofile/';
 
 if ~exist(outpath,'dir')
     mkdir(outpath);
@@ -19,13 +22,17 @@ thesiteval = fieldnames(sitekey.imosamnm);
 thevarval = fieldnames(varkey);
 theagencyval = fieldnames(agency.imosprofile);
 
-[~,headers] = xlsread(thefile,'A1:AO1');
+Table = readtable(thefile);
+headers = Table.Properties.VariableNames;
+%[~,headers] = xlsread(thefile,'A1:AO1');
 
-[snum,sstr] = xlsread(thefile,'A2:AO2000');
+%snum,sstr] = xlsread(thefile,'A2:AO2000');
 
-stations = sstr(:,3);
+%stations = sstr(:,3);
+stations = Table{:,3};
 
-sdate = sstr(:,5);
+sdate = Table{:,5};
+%sdate = sstr(:,5);
 sdate = regexprep(sdate,'T',' ');
 sdate = regexprep(sdate,'Z','');
 
@@ -33,7 +40,8 @@ sdate = regexprep(sdate,'Z','');
 mdates = datenum(sdate,'yyyy-mm-dd HH:MM:SS');
 
 
-Depths = snum(:,14);
+%Depths = snum(:,14);
+Depths = Table{:,14};
 Depths(isnan(Depths)) = 0;
 
 
@@ -78,7 +86,8 @@ for i = 19:length(headers)
             
             sss = find(strcmpi(stations,ustations{j}) == 1);
             
-            thedata_raw = snum(sss,i-1) * agency.imosprofile.(theagencyval{foundvar}).Conv;
+            %thedata_raw = snum(sss,i-1) * agency.imosprofile.(theagencyval{foundvar}).Conv;
+            thedata_raw = Table{sss,i-1} * agency.imosprofile.(theagencyval{foundvar}).Conv;
             ttt = find(~isnan(thedata_raw) == 1);
             thedata = thedata_raw(ttt);
             

@@ -1,11 +1,18 @@
 function [metdata,outname] = bom_sites(nSiteID,met)
 
-[snum,sstr] = xlsread('BOM_Extracted.csv','A2:D10000');
+%[snum,sstr] = xlsread('BOM_Extracted.csv','A2:D10000');
+warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames')
+TableVar = readtable('BOM_Extracted.csv');
+warning('ON', 'MATLAB:table:ModifiedAndSavedVarnames')
 
-code = snum(:,1);
-name = sstr(:,1);
-lat = snum(:,3);
-lon = snum(:,4);
+    code = TableVar{:,1};
+    name = TableVar{:,2};
+    latlist = TableVar{:,3};
+    lonlist = TableVar{:,4};
+    % code = snum(:,1);
+    % name = sstr(:,1);
+    % lat = snum(:,3);
+    % lon = snum(:,4);
 
 name = regexprep(name,'\s','_');
 name = regexprep(name,'(','');
@@ -17,8 +24,8 @@ if ~isempty(sss)
         disp(name{sss(1)});
 
     metdata.(name{sss(1)}) = met;
-    metdata.(name{sss(1)}).lat = lat(sss(1));
-    metdata.(name{sss(1)}).lon = lon(sss(1));
+    metdata.(name{sss(1)}).lat = latlist(sss(1));
+    metdata.(name{sss(1)}).lon = lonlist(sss(1));
     
     
     outname = name{sss(1)};

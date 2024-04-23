@@ -2,9 +2,11 @@ function calculate_SMD_for_headers;
 
 addpath(genpath('../functions/'));
 
-filepath = 'D:\csiem\data-warehouse\csv\';
+filepath = '../../../data-warehouse/csv/';
+%          'D:\csiem\data-warehouse\csv\';
 
-filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(filepath, '**/*HEADER.csv'));  %get list of files and folders in any subfolder
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 shp = shaperead('Summary/GIS/Boundary.shp');
@@ -16,10 +18,10 @@ dtri_external = DelaunayTri(external.Var1,external.Var2);
 
 
 for i = 1:length(filelist)
-    filename = [filelist(i).folder,'\',filelist(i).name];
+    filename = [filelist(i).folder,'/',filelist(i).name];
     
     newfile = regexprep(filename,'_HEADER.csv','_SMD.csv');
-    
+    filename
     data = import_header(filename);
     
     query_points(:,1) = data.Lon;

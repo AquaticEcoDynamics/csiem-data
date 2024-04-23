@@ -2,11 +2,14 @@ function import_theme3ctd_data
 addpath(genpath('../../functions/'));
 
 
-load ../../../code/actions/sitekey.mat;
-load ../../../code/actions/varkey.mat;
-load ../../../code/actions/agency.mat;
+load ../../../../code/actions/sitekey.mat;
+load ../../../../code/actions/varkey.mat;
+load ../../../../code/actions/agency.mat;
 
-outdir = 'D:\csiem\data-warehouse\csv_holding\wamsi\wwmsp3.1_ctd\';mkdir(outdir);
+outdir = '../../../../../data-warehouse/csv_holding/wamsi/wwmsp3.1_ctd/';mkdir(outdir);
+outdir_main = '../../../../../data-warehouse/csv/wamsi/wwmsp3.1_ctd/';mkdir(outdir_main);
+
+%'D:\csiem\data-warehouse\csv_holding\wamsi\wwmsp3.1_ctd\';mkdir(outdir);
 
 
 data = readtable([outdir,'wwmsp_theme3.1_CTD_reformat_bbusch_working.csv']);
@@ -39,7 +42,7 @@ for i = 1:length(thevars)
         varname = varkey.(agency.theme3ctd.(thevars{i}).ID).Name;
         fullvar = [varname,' (',varkey.(agency.theme3ctd.(thevars{i}).ID).Unit,')'];
         
-        filename = [outdir,thesites{j},'_',regexprep(varname,' ','_'),'_DATA.csv'];
+        filename = [outdir_main,thesites{j},'_',regexprep(varname,' ','_'),'_DATA.csv'];
         
             
             

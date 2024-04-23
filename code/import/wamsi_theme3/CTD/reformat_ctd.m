@@ -2,14 +2,16 @@ function reformat_ctd
 
 addpath(genpath('../../functions/'));
 
-basedir = 'D:\csiem\data-lake\WAMSI\wwmsp3.1_ctd\CTD\';
+basedir = '../../../../../data-lake/WAMSI/wwmsp3.1_ctd/CTD/';
+%'D:\csiem\data-lake\WAMSI\wwmsp3.1_ctd\CTD\';
 
-filelist = dir(fullfile(basedir, '**\*.csv'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(basedir, '**/*.csv'));  %get list of files and folders in any subfolder
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 [conv,trans] = xlsread('translation.xlsx','A2:E100');
 
-outdir = 'D:\csiem\data-warehouse\csv_holding\wamsi\wwmsp3.1_ctd\';mkdir(outdir);
+outdir = '../../../../../data-warehouse/csv_holding/wamsi/wwmsp3.1_ctd/';mkdir(outdir);
+%'D:\csiem\data-warehouse\csv_holding\wamsi\wwmsp3.1_ctd\';mkdir(outdir);
 
 fid = fopen([outdir,'wwmsp_theme3.1_CTD_reformat_bbusch_working.csv'],'wt');
 
@@ -17,26 +19,32 @@ fprintf(fid,'Date,X,Y,Depth (m),Height (mAHD),Site,SampleID,Variable,Units,Readi
 
 for i = 1:length(filelist)
     
-    
-    
-    filename = [filelist(i).folder,'\',filelist(i).name];
-    
+    filename = [filelist(i).folder,'/',filelist(i).name];
+    %filename = [filelist(i).folder,'\',filelist(i).name];
     
     disp(filename);
     
-    [snum,sstr,scell] = xlsread(filename,'B4:B6');
+    siteName = readmatrix(filename,"Range","B4:B4","OutputType","string");
+    LatLon = readmatrix(filename,"Range","B5:B6","OutputType","string");
+    %[snum,sstr,scell] = xlsread(filename,'B4:B6');
     
-    [~,~,sdates] = xlsread(filename,'B1:D1');
+    sdates = readmatrix(filename,Range="B1:D1",OutputType="string");
+    %[~,~,sdates] = xlsread(filename,'B1:D1');
     
-    ID = scell{1};
-    X = scell{2};
-    Y = scell{3};
+    ID = char(siteName); %scell{1};
+    X = char(LatLon(1)); %scell{2};
+    Y = char(LatLon(2)); %scell{3};
+
+    %ID = (siteName); %scell{1};
+    %X = (LatLon(1)); %scell{2};
+    %Y = (LatLon(2)); %scell{3};
     
     if isnumeric(ID)
         ID = num2str(ID);
     end
     
-    [~,headers,~] = xlsread(filename,'A8:R8');
+    %[~,headers,~] = xlsread(filename,'A8:R8');
+    headers = readmatrix(filename,Range="A8:R8",OutputType="string");
     headers = regexprep(headers,',','');
     
     

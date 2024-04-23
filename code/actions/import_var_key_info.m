@@ -2,6 +2,7 @@ clear all; close all;
 
 filename = '../../data-governance/variable_key.xlsx';
 
+
 [snum,sstr] = xlsread(filename,'MASTER KEY','A2:K10000');
 
 st = length(sstr) + 1;
@@ -80,6 +81,14 @@ agency.imossrs = import_agency_conv('IMOSSRS');
 
 agency.imosprofile = import_agency_conv('IMOSPROFILE');
 agency.fpamqmp = import_agency_conv('FPA-MQMP');
+
+agency.theme3sedpsd = import_agency_conv('WWMSP3SEDPSD');
+agency.theme3sgrest = import_agency_conv('WWMSP3SGREST');
+
+agency.theme5waves = import_agency_conv('WWMSP5Waves');
+agency.bmtswan = import_agency_conv('BMT-SWAN');
+agency.wwmsp1wrf = import_agency_conv('WWMSP1.1-WRF');
+agency.bombarraftv = import_agency_conv('BOM-BARRA');
 
 
 save agency.mat agency -mat;

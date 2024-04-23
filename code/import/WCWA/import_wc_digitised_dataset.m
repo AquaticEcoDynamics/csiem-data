@@ -4,10 +4,12 @@ addpath(genpath('../../functions/'));
 load ../../actions/sitekey.mat
 load ../../actions/varkey.mat
 
-xlsname = 'D:\csiem\data-lake\WCWA\WC-BMT\Digitised_DO.xlsx';
+xlsname = '../../../../data-lake/WCWA/WC-BMT/Digitised_DO.xlsx';
+%            'D:\csiem\data-lake\WCWA\WC-BMT\Digitised_DO.xlsx';
 
 
-outdir = 'D:\csiem\data-warehouse\csv\wcwa\psdp-1.2\';mkdir(outdir);
+outdir = '../../../../data-warehouse/csv/wcwa/psdp-1.2/';mkdir(outdir);
+%'           D:\csiem\data-warehouse\csv\wcwa\psdp-1.2\';mkdir(outdir);
 
 %____________________________________________________________
 mdata = [];ddata = [];data = [];

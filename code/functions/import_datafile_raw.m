@@ -1,9 +1,14 @@
 function data = import_datafile(filename)
 
-[~,headers] = xlsread(filename,'A1:D1');
-
+%[~,headers] = xlsread(filename,'A1:D1');
 
 fid = fopen(filename,'rt');
+
+fline = fgetl(fid);
+headers = split(fline,',');
+
+frewind(fid);
+
 
 
 x  = 4;
@@ -15,7 +20,7 @@ fclose(fid);
 
 mDate = datenum(datacell{1},'yyyy-mm-dd HH:MM:SS');
 %data.Date =  datetime(datacell{1},'InputFormat','yyyy-mm-dd HH:MM:SS');
-mData = str2doubleq(datacell{3});
+mData = str2double(datacell{3});
 mQC = datacell{4};
 if strcmpi(headers{2},'Depth')
     mDepth = datacell{2};

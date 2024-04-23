@@ -6,14 +6,16 @@ load ../../../code/actions/varkey.mat;
 
 load ../../../code/actions/sitekey.mat;
 
-data = readtable('D:\csiem\data-lake\DPIRD\crab\Temperature\CS temp loggers_2007_to_2015 (1).xlsx');
+filePath = '../../../../data-lake/DPIRD/crab/Temperature/CS temp loggers_2007_to_2015 (1).xlsx';
+%'D:\csiem\data-lake\DPIRD\crab\Temperature\CS temp loggers_2007_to_2015 (1).xlsx'
+data = readtable(filePath);
 
 mdate = datenum(data.date_local) + data.time_local;
 
 sites = unique(data.site_code);
 
-outdir = 'D:\csiem\data-warehouse\csv\dpird\crp\';mkdir(outdir);
-
+outdir = '../../../../data-warehouse/csv/dpird/crp/';mkdir(outdir);
+%'D:\csiem\data-warehouse\csv\dpird\crp\';
 catsites = fieldnames(sitekey.dpird);
 
 for i = 1:length(sites)

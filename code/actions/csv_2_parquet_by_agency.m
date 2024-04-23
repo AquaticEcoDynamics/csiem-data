@@ -4,17 +4,24 @@ addpath(genpath('../functions/'));
 
 load varkey.mat;
 
-outfilepath = 'D:/csiem/data-warehouse/parquet/agency/';
-filepath ='D:/csiem/data-warehouse/csv/';
+outfilepath = '../../../data-warehouse/parquet/agency/';
+             %'D:/csiem/data-warehouse/parquet/agency/';
+filepath = '../../../data-warehouse/csv/';
+%          'D:/csiem/data-warehouse/csv/';
 
 mkdir(outfilepath);
 
-filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+filelist = dir(fullfile(filepath, '**/*HEADER.csv'));  %get list of files and folders in any subfolder
+%filelist = dir(fullfile(filepath, '**\*HEADER.csv'));  %get list of files and folders in any subfolder
+
 filelist = filelist(~[filelist.isdir]);  %remove folders from list
 
 agency = [];
 for i = 1:length(filelist)
-    data(i).header = import_header([filelist(i).folder,'\',filelist(i).name]);
+    display([filelist(i).folder,'/',filelist(i).name])
+    data(i).header = import_header([filelist(i).folder,'/',filelist(i).name]);
+%    data(i).header = import_header([filelist(i).folder,'\',filelist(i).name]);
+
     agency = [agency;{data(i).header.Agency_Code}];
 end
 
@@ -38,7 +45,9 @@ for ag = 1:length(unique_agency)
         
         
         
-        headerfile = [filelist(find_agency(ff)).folder,'\',filelist(find_agency(ff)).name];
+        headerfile = [filelist(find_agency(ff)).folder,'/',filelist(find_agency(ff)).name];
+%        headerfile = [filelist(find_agency(ff)).folder,'\',filelist(find_agency(ff)).name];
+
         datafile = regexprep(headerfile,'HEADER','DATA');
         
         % Import the header stuff

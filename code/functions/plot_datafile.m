@@ -12,7 +12,8 @@ data = import_datafile(filename);
 
 %data
 
-[~,headers] = xlsread(filename,'A1:D1');
+%[~,headers] = xlsread(filename,'A1:D1');
+[headers] = readmatrix(filename,Range='A1:D1',OutputType="char");
 
 %     data.Depth = depth;
 %     data.Depth_T = depth1;

@@ -11,22 +11,26 @@ addpath(genpath('Functions'));
 
 % There is a zipped folder in Raw Zipped. Unzip that folder and add it to the Raw directory. It's too big for Github unzipped.
 
-holding = 'D:\csiem\data-warehouse\csv_holding\dwer\matfiles\';
+holding = '/Projects2/csiem-data-hub/data-warehouse/csv_holding/dwer/matfiles';
+%'D:\csiem\data-warehouse\csv_holding\dwer\matfiles\';
 
-dirlist = dir('D:\csiem/data-lake/dwer/swanest/');
+swanestPath = '/Projects2/csiem-data-hub/data-lake/DWER/swanest/';
+dirlist = dir(swanestPath);
+%'D:\csiem/data-lake/dwer/swanest/'
 
 for i = 71:length(dirlist)%3
     
-    filelist = dir(['D:\csiem\data-lake/dwer/swanest/',dirlist(i).name,'/*.xlsx']);
+    filelist = dir([swanestPath,dirlist(i).name,'/*.xlsx']);
     
     if strcmpi(filelist(1).name,'WaterQualityDiscreteForSiteCrossTab.xlsx')
-        filename = ['D:\csiem\data-lake/dwer/swanest/',dirlist(i).name,'/WaterQualityDiscreteForSiteCrossTab.xlsx'];
+        filename = [swanestPath,dirlist(i).name,'/WaterQualityDiscreteForSiteCrossTab.xlsx'];
         type = 'WQ';
 %         if i ~= 9
+            filename
          [rows,cols] = calculate_xls_size(filename);
 %         end
     else
-        filename = ['D:\csiem\data-lake/dwer/swanest/',dirlist(i).name,'/WaterLevelsContinuousForSiteCrossTab.xlsx'];
+        filename = [swanestPath,dirlist(i).name,'/WaterLevelsContinuousForSiteCrossTab.xlsx'];
         type = 'Level';
         [rows,cols] = calculate_xls_size_l(filename);
     end
@@ -70,7 +74,8 @@ end
 
 
 %
-save D:\csiem\data-warehouse\csv_holding\dwer\swan.mat swan -mat -v7.3;
+save /Projects2/csiem-data-hub/data-warehouse/csv_holding/dwer/swan.mat swam -mat -v7.3;
+%D:\csiem\data-warehouse\csv_holding\dwer\swan.mat swan -mat -v7.3;
 
 % import_drainage_data;
 % save('../modeltools/matfiles/swan.mat','swan','-mat');

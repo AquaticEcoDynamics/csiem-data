@@ -30,7 +30,7 @@ create_parquet = 0;
 create_dataplots = 0;
 plotnew_dataplots = 0;
 
-create_shapefiles = 1;
+create_shapefiles = 0;
 
 
 run_marvl = 1;
@@ -55,7 +55,7 @@ if import_dwer
     % DWER Export
     cd ../import/DWER;
     
-    run_WIR_import_v2;
+    %run_WIR_import_v2;
     export_wir_v2_stage1;
     import_and_reformat_flatfile;
     
@@ -157,11 +157,22 @@ end
 
 if import_theme3
     % wamsi_theme3
-    cd ../import/wamsi_theme3
+    cd ../import/wamsi_theme3/CTD
     reformat_ctd;
     import_theme3ctd_data;
     
-    cd ../../actions/
+    cd ../../../actions/
+
+    %Sediment
+    cd ../import/wamsi_theme3/SEDPSD
+    run ImportSEDPSDMain
+    cd ../../../actions
+
+    cd ../import/wamsi_theme3/SGREST
+    run ImportSGRESTMain
+    cd ../../../actions
+
+    
 end
 
 if import_wc
@@ -201,10 +212,10 @@ if create_dataplots
 end
 
 if run_marvl
-    addpath(genpath('D:\csiem\marvl'));
+    addpath(genpath('/GIS_DATA/csiem-data-hub/marvl'));
     create_marvl_config_information;
     run_AEDmarvl marvl_pipeline_images;
-    rmpath(genpath('D:\csiem\marvl'));
+    rmpath(genpath('/GIS_DATA/csiem-data-hub/marvl'));
 end
 
 if create_shapefiles

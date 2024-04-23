@@ -4,7 +4,8 @@ load ../../actions/varkey.mat;
 load ../../actions/sitekey.mat;
 load ../../actions/agency.mat;
 
-xlsfilename = 'D:\csiem\data-lake\FPA\MQMP\MQMP2002-2021_WQ_20210728.xlsx';
+xlsfilename = '../../../../data-lake/FPA/MQMP/MQMP2002-2021_WQ_20210728.xlsx';
+%'                D:\csiem\data-lake\FPA\MQMP\MQMP2002-2021_WQ_20210728.xlsx';
 
 sheetname = {'InnerHarbourWQ';...
     'RousHeadHarbour';...
@@ -13,7 +14,8 @@ sheetname = {'InnerHarbourWQ';...
     };
 
 
-outdir = 'D:\csiem\data-warehouse\csv\fpa\mqmp\';mkdir(outdir);
+outdir = '../../../../data-warehouse/csv/fpa/mqmp/';mkdir(outdir);
+%           'D:\csiem\data-warehouse\csv\fpa\mqmp\';mkdir(outdir);
 
 
 rownumber = [452,93,277,265];
